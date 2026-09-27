@@ -33,3 +33,5 @@ Open [http://127.0.0.1:38421](http://127.0.0.1:38421).
 npm test
 npm run lint
 ```
+
+With the dev server running, `node scripts/verify-ui.mjs` walks the markets board, a paper order, and the portfolio page in headless Chrome.

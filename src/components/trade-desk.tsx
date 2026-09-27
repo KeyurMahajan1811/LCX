@@ -202,7 +202,7 @@ export function TradeDesk({ base, quote }: { base: string; quote: string }) {
       return;
     }
     try {
-      paper.submit({
+      const next = paper.submit({
         pair,
         base,
         quote,
@@ -216,10 +216,11 @@ export function TradeDesk({ base, quote }: { base: string; quote: string }) {
           last: ticker?.lastPrice ?? 0,
         },
       });
+      const placed = next.orders[0];
       setNotice(
-        orderType === "MARKET"
-          ? "Paper order filled against the current touch."
-          : "Paper order is working, or filled if it crossed the book.",
+        placed?.status === "FILLED"
+          ? `Paper order filled at ${placed.average} ${quote}.`
+          : "Paper order is working. Funds stay locked until it fills or you cancel it.",
       );
       setAmount("");
     } catch (err) {

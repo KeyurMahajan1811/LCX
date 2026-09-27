@@ -7,9 +7,16 @@ const API_VERSION = "1.1.0";
 
 const PAIR = /^[A-Za-z0-9.]{1,16}\/[A-Za-z0-9.]{1,16}$/;
 
+export class LcxInputError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "LcxInputError";
+  }
+}
+
 export function assertPair(pair: string): string {
   const value = pair.trim().toUpperCase();
-  if (!PAIR.test(value)) throw new Error("Pair must look like LCX/EUR.");
+  if (!PAIR.test(value)) throw new LcxInputError("Pair must look like LCX/EUR.");
   return value;
 }
 

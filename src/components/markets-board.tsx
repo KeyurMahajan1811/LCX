@@ -9,8 +9,6 @@ import { changeTone, formatChange, formatNumber, formatPrice, pairParts, tradePa
 import type { Ticker } from "@/lib/types";
 import { cn } from "cn";
 
-const QUOTES = ["All", "EUR", "USDC", "BTC", "ETH", "LCX"];
-
 type SortKey = "symbol" | "lastPrice" | "change" | "volume";
 
 export function MarketsBoard() {
@@ -46,6 +44,15 @@ export function MarketsBoard() {
     };
   }, []);
 
+  const quotes = useMemo(() => {
+    const found = new Set<string>();
+    for (const ticker of Object.values(tickers ?? {})) {
+      const next = pairParts(ticker.symbol).quote;
+      if (next) found.add(next);
+    }
+    return ["All", ...[...found].sort()];
+  }, [tickers]);
+
   const rows = useMemo(() => {
     const list = Object.values(tickers ?? {});
     const needle = query.trim().toLowerCase();
@@ -63,6 +70,9 @@ export function MarketsBoard() {
       const right = sort === "symbol" ? b.symbol : b[sort] || 0;
       if (left < right) return direction === "asc" ? -1 : 1;
       if (left > right) return direction === "asc" ? 1 : -1;
+      const live = (ticker: Ticker) => (ticker.bestBid > 0 ? 1 : 0) + (ticker.bestAsk > 0 ? 1 : 0);
+      const depth = live(b) - live(a);
+      if (depth !== 0) return depth;
       return a.symbol.localeCompare(b.symbol);
     });
     return filtered;
@@ -105,7 +115,7 @@ export function MarketsBoard() {
         }
       >
         <div className="flex flex-wrap gap-1.5 px-3 py-2">
-          {QUOTES.map((item) => (
+          {quotes.map((item) => (
             <button
               key={item}
               type="button"

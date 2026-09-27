@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { assertPair, lcxSigned } from "@/lib/lcx";
+import { apiError } from "@/lib/http";
+import { assertPair, LcxInputError, lcxSigned } from "@/lib/lcx";
 
 export const dynamic = "force-dynamic";
 
@@ -40,8 +41,10 @@ export async function POST(request: NextRequest) {
     const data = await dispatch(body.action, { apiKey, secret }, body);
     return NextResponse.json({ data });
   } catch (error) {
+    if (error instanceof LcxInputError) return apiError(error, "Invalid account request.");
     const message = error instanceof Error ? error.message : "LCX account request failed.";
-    return NextResponse.json({ error: message }, { status: 502 });
+    const status = message === "Unknown account action." || message.startsWith("A live") || message.startsWith("Limit") || message.startsWith("Amount") || message.startsWith("Cancel") ? 400 : 502;
+    return NextResponse.json({ error: message }, { status });
   }
 }
 
