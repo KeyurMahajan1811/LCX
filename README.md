@@ -1,31 +1,28 @@
-# LCX Desk
+# LoanChallanX (LCX)
 
-A market terminal for [LCX Exchange](https://lcx.com). It reads public prices, order books, candles, and prints from the LCX API, and it keeps a paper trading book in the browser. If you add an LCX API key, the same ticket can place and cancel live orders.
+Web desk that replaces the WhatsApp handoff between Bank of Maharashtra officials and the vendor team while an RBI home-loan settlement challan is prepared.
 
-`cursor-prompt-lcx-app.md` was not in this workspace, so the app follows the public LCX exchange surface: markets, a trade desk, and a portfolio.
+Bank officials submit applicants and seven documents. The vendor mailbox shows every bank (the POC seeds only Bank of Maharashtra). Status labels flip with the viewer: the party who must act next sees **Action Required**. Documents stay in object storage with no expiry rules, including after completion or cancellation.
 
-## Run
+## Run locally
+
+PostgreSQL and an S3-compatible store are required. This environment uses local Postgres and [s3rver](https://github.com/jamhall/s3rver) so presigned uploads work without AWS credentials. Production should point `S3_*` at AWS S3, Cloudflare R2, or similar, with no lifecycle delete rules.
 
 ```bash
+cp .env.example .env
 npm install
+npm run s3
+npx prisma migrate dev
+npm run db:seed
 npm run dev
-```
-
-The dev server uses port **38421**:
-
-```bash
-npm run dev -- --port 38421
 ```
 
 Open [http://127.0.0.1:38421](http://127.0.0.1:38421).
 
-## What you can do
+Demo password for every seed user: `LCX-demo-2026`
 
-- Scan pairs, filter by quote currency, and sort by price, change, or volume.
-- Open a market for candles, the order book, and recent public trades.
-- Buy and sell in the paper book. Market orders fill at the live touch. Limit orders rest until the book crosses them, and funds stay locked until then. The simulated fee is 0.15%.
-- Reset the paper book from the portfolio page. Starting balances are 25,000 EUR, 10,000 USDC, 0.15 BTC, 1.5 ETH, and 25,000 LCX.
-- Optional: save an LCX API key and secret in this browser, load live balances and open orders, and send a confirmed live order. The app signs each request with HMAC-SHA256 and does not write the secret to the server.
+- Bank official: `priya.kulkarni@mahabank.example` (also `amit.deshmukh@mahabank.example`)
+- Vendor: `sandeep@loanchallanx.example` (also `neha.rao@loanchallanx.example`)
 
 ## Checks
 
@@ -33,5 +30,3 @@ Open [http://127.0.0.1:38421](http://127.0.0.1:38421).
 npm test
 npm run lint
 ```
-
-With the dev server running, `node scripts/verify-ui.mjs` walks the markets board, a paper order, and the portfolio page in headless Chrome.

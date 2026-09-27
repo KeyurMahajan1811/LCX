@@ -1,5 +1,9 @@
-import { MarketsBoard } from "@/components/markets-board";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export default function HomePage() {
-  return <MarketsBoard />;
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) redirect("/login");
+  redirect(session.user.role === "VENDOR" ? "/vendor/mailbox" : "/bank/mailbox");
 }

@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BANK_OFFICIAL
+  VENDOR
+}
+
+enum RequestStatus {
+  PENDING_AT_VENDOR
+  PENDING_AT_BANK
+  COMPLETED
+  CANCELLED
+}
+
+enum DocumentType {
+  DOCUMENT_1
+  DOCUMENT_2
+  DOCUMENT_3
+  DOCUMENT_4
+  DOCUMENT_5
+  DOCUMENT_6
+  DOCUMENT_7
+  FINAL_CHALLAN
+}
+
+model Bank {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  createdAt DateTime      @default(now())
+  officials User[]
+  requests  LoanRequest[]
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         Role
+  bankId       String?
+  bank         Bank?         @relation(fields: [bankId], references: [id])
+  createdAt    DateTime      @default(now())
+  requests     LoanRequest[] @relation("CreatedBy")
+}
+
+model LoanRequest {
+  id             String          @id @default(cuid())
+  requestCode    String          @unique
+  bankId         String
+  bank           Bank            @relation(fields: [bankId], references: [id])
+  createdById    String
+  createdBy      User            @relation("CreatedBy", fields: [createdById], references: [id])
+  status         RequestStatus   @default(PENDING_AT_VENDOR)
+  applicantCount Int
+  applicants     Applicant[]
+  documents      Document[]
+  statusHistory  StatusHistory[]
+  actions        ActionMessage[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([bankId, updatedAt])
+  @@index([status])
+}
+
+model Applicant {
+  id          String      @id @default(cuid())
+  requestId   String
+  request     LoanRequest @relation(fields: [requestId], references: [id])
+  sequenceNo  Int
+  fullName    String
+  panCard     String
+  aadhaarCard String
+  mobileNo    String
+  email       String
+
+  @@unique([requestId, sequenceNo])
+}
+
+model Document {
+  id             String       @id @default(cuid())
+  requestId      String
+  request        LoanRequest  @relation(fields: [requestId], references: [id])
+  documentType   DocumentType
+  fileUrl        String
+  fileName       String
+  fileSizeKb     Int
+  uploadedById   String
+  uploadedByRole Role
+  uploadedAt     DateTime     @default(now())
+  version        Int          @default(1)
+
+  @@index([requestId, documentType])
+}
+
+model StatusHistory {
+  id            String         @id @default(cuid())
+  requestId     String
+  request       LoanRequest    @relation(fields: [requestId], references: [id])
+  fromStatus    RequestStatus?
+  toStatus      RequestStatus
+  changedById   String
+  changedByRole Role
+  note          String?
+  changedAt     DateTime       @default(now())
+
+  @@index([requestId, changedAt])
+}
+
+model ActionMessage {
+  id        String      @id @default(cuid())
+  requestId String
+  request   LoanRequest @relation(fields: [requestId], references: [id])
+  fromRole  Role
+  message   String
+  createdAt DateTime    @default(now())
+
+  @@index([requestId, createdAt])
+}
