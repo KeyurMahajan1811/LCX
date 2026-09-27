@@ -80,7 +80,7 @@ export function Mailbox({ role }: { role: AppRole }) {
               <button
                 key={document.id}
                 type="button"
-                className="rounded bg-stone-100 px-1.5 py-0.5 text-[11px] text-stone-700 hover:bg-stone-200"
+                className="rounded bg-accent px-1.5 py-0.5 text-[11px] text-primary hover:bg-[#d6e6ff]"
                 onClick={() => downloadDocument(row.original.id, document.id)}
               >
                 {DOCUMENT_LABELS[document.documentType] ?? document.documentType}
@@ -88,7 +88,7 @@ export function Mailbox({ role }: { role: AppRole }) {
               </button>
             ))}
             {row.original.documents.length > 4 && (
-              <span className="text-[11px] text-stone-500">+{row.original.documents.length - 4}</span>
+              <span className="text-[11px] text-muted-foreground">+{row.original.documents.length - 4}</span>
             )}
           </div>
         ),
@@ -98,7 +98,7 @@ export function Mailbox({ role }: { role: AppRole }) {
         header: "Action",
         enableSorting: false,
         cell: ({ row }) => (
-          <Link href={`${detailBase}/${row.original.id}`} className="text-sm font-medium text-[#7A0C2E] underline-offset-2 hover:underline">
+          <Link href={`${detailBase}/${row.original.id}`} className="text-sm font-medium text-primary underline-offset-2 hover:underline">
             Open
           </Link>
         ),
@@ -199,7 +199,7 @@ export function Mailbox({ role }: { role: AppRole }) {
         {query.data && table.getRowModel().rows.length > 0 && (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
-              <thead className="sticky top-0 bg-stone-50 text-left text-xs text-stone-500">
+              <thead className="sticky top-0 bg-accent text-left text-xs text-muted-foreground">
                 {table.getHeaderGroups().map((group) => (
                   <tr key={group.id} className="border-b border-border">
                     {group.headers.map((header) => (
@@ -219,7 +219,7 @@ export function Mailbox({ role }: { role: AppRole }) {
               </thead>
               <tbody>
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="border-b border-border/80 hover:bg-stone-50">
+                  <tr key={row.id} className="border-b border-border/80 hover:bg-accent/60">
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-3 py-3 align-top">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -20,9 +20,9 @@ export function getDisplayStatus(canonicalStatus: CanonicalStatus, viewerRole: A
 }
 
 export const STATUS_BADGE_CLASS: Record<string, string> = {
-  "badge-red": "bg-red-100 text-red-900 ring-red-200",
-  "badge-blue": "bg-sky-100 text-sky-950 ring-sky-200",
-  "badge-amber": "bg-amber-100 text-amber-950 ring-amber-200",
-  "badge-green": "bg-emerald-100 text-emerald-950 ring-emerald-200",
-  "badge-gray": "bg-stone-200 text-stone-700 ring-stone-300",
+  "badge-red": "bg-red-50 text-red-700 ring-red-200",
+  "badge-blue": "bg-[#EBF3FF] text-[#0066FF] ring-[#0066FF]/20",
+  "badge-amber": "bg-amber-50 text-amber-800 ring-amber-200",
+  "badge-green": "bg-[#E7F9F3] text-[#067A58] ring-[#00C48C]/40",
+  "badge-gray": "bg-[#F4F6FA] text-[#52607A] ring-[#E4E9F2]",
 };

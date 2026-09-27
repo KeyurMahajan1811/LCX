@@ -18,8 +18,7 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-up: var(--up);
-  --color-down: var(--down);
+  --color-success: var(--success);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -51,46 +50,39 @@
 }
 
 :root {
-  --background: #f7f6f4;
-  --foreground: #1c1917;
+  --background: #f4f6fa;
+  --foreground: #0b0f19;
   --card: #ffffff;
-  --card-foreground: #1c1917;
+  --card-foreground: #0b0f19;
   --popover: #ffffff;
-  --popover-foreground: #1c1917;
-  --primary: #7a0c2e;
+  --popover-foreground: #0b0f19;
+  --primary: #0066ff;
   --primary-foreground: #ffffff;
-  --secondary: #f3efe8;
-  --secondary-foreground: #1c1917;
-  --muted: #f3efe8;
-  --muted-foreground: #57534e;
-  --accent: #d9a441;
-  --accent-foreground: #1c1917;
-  --destructive: #9f1239;
-  --border: #e7e5e4;
-  --input: #e7e5e4;
-  --ring: #7a0c2e;
-  --chart-1: #7a0c2e;
-  --chart-2: #d9a441;
-  --chart-3: #44403c;
-  --chart-4: #a8a29e;
-  --chart-5: #e7e5e4;
+  --secondary: #ebf3ff;
+  --secondary-foreground: #0b0f19;
+  --muted: #ebf3ff;
+  --muted-foreground: #52607a;
+  --accent: #ebf3ff;
+  --accent-foreground: #0066ff;
+  --destructive: #c2414b;
+  --border: #e4e9f2;
+  --input: #e4e9f2;
+  --ring: #0066ff;
+  --success: #00c48c;
+  --chart-1: #0066ff;
+  --chart-2: #00c48c;
+  --chart-3: #0b0f19;
+  --chart-4: #ebf3ff;
+  --chart-5: #e4e9f2;
   --radius: 0.5rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #1c1917;
-  --sidebar-primary: #7a0c2e;
+  --sidebar-foreground: #0b0f19;
+  --sidebar-primary: #0066ff;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f8efe6;
-  --sidebar-accent-foreground: #7a0c2e;
-  --sidebar-border: #e7e5e4;
-  --sidebar-ring: #d9a441;
-}
-
-[data-theme="vendor"] {
-  --primary: #1c2430;
-  --ring: #d9a441;
-  --sidebar-primary: #1c2430;
-  --sidebar-accent: #f8f1e3;
-  --sidebar-accent-foreground: #1c2430;
+  --sidebar-accent: #ebf3ff;
+  --sidebar-accent-foreground: #0066ff;
+  --sidebar-border: #e4e9f2;
+  --sidebar-ring: #0066ff;
 }
 
 @layer base {
@@ -104,6 +96,12 @@
     @apply font-sans;
     color-scheme: light;
   }
+}
+
+[data-sonner-toast][data-type="success"] {
+  background: #00c48c !important;
+  border-color: #00c48c !important;
+  color: #ffffff !important;
 }
 
 .num {

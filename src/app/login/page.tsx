@@ -29,10 +29,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#F7F6F4] px-4">
+    <main className="grid min-h-screen place-items-center bg-background px-4">
       <form onSubmit={submit} className="w-full max-w-md rounded-xl border border-border bg-white p-6 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded bg-[#7A0C2E] text-xs font-semibold text-white">BoM</span>
+          <span className="grid size-10 place-items-center rounded bg-primary text-xs font-semibold text-primary-foreground">LX</span>
           <div>
             <h1 className="text-xl font-semibold">LoanChallanX</h1>
             <p className="text-sm text-muted-foreground">Home loan settlement challans</p>

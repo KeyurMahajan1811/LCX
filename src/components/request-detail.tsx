@@ -165,7 +165,7 @@ export function RequestDetail({ id, role }: { id: string; role: AppRole }) {
       <Panel title="Applicants">
         <div className="grid gap-3 md:grid-cols-2">
           {request.applicants.map((applicant) => (
-            <div key={applicant.sequenceNo} className="rounded-lg bg-stone-50 p-3 text-sm">
+            <div key={applicant.sequenceNo} className="rounded-lg bg-accent p-3 text-sm">
               <div className="font-medium">Applicant {applicant.sequenceNo}</div>
               <div>{applicant.fullName}</div>
               <div className="text-muted-foreground">PAN {applicant.panCard}</div>
@@ -217,7 +217,7 @@ export function RequestDetail({ id, role }: { id: string; role: AppRole }) {
           {request.actions.length === 0 && <p className="text-sm text-muted-foreground">No queries yet.</p>}
           <ul className="space-y-3 text-sm">
             {request.actions.map((action) => (
-              <li key={action.id} className="rounded-lg bg-stone-50 p-3">
+              <li key={action.id} className="rounded-lg bg-accent p-3">
                 <div className="text-xs text-muted-foreground">
                   {action.fromRole} · {formatWhen(action.createdAt)}
                 </div>
